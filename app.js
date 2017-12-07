@@ -160,10 +160,10 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    alert((getFamily(people, person)));
     break;
     case "descendants":
-    displayPeople(findDescendants(data, person));
+    displayPeople(findDescendants(people, person));
 
 
 
@@ -195,16 +195,60 @@ function findDescendants(people, person){
 
 }
 
-// function getFamily(person){
-//   let family = "Parents:" + findName(person.parents[0]) + findName(person.parents[1]) + "\n";
-//   if(person.currentSpouse != null){
-//     family += "Spouse: " + findName(person.currentSpouse) + "\n";
-//   }
+function getSpouse(people, person){
+  let spouse = people.filter(function(el){
+    if(el.currentSpouse === person.id){
+      return true;
+    }
+  });
+  return spouse;
+}
 
+function getChildren(people, person){
+  let children = people.filter(function(el){
+    for (let i = 0; i < el.parents.length; i++) {
+      if(el.parents[i] === person.id){
+        return true;
+      }
+    }
+  });
+  return children;
+}
 
+function getSiblings(people, person){
+  let siblings = people.filter(function(el){
+    if(el.parents.length === 2){
+      if(el.parents[0] === person.parents[0] && el.parents[1] === person.parents[1] ||
+      el.parents[1] === person.parents[0] && el.parents[0] === person.parents[1] ){
+        return true;
+      }
+    }
+  });
+  return siblings;
+}
 
+function getFamily(people, person){
+  let family;
+  if(person.parents.length > 0){
+    family = "Parents:" + findName(person.parents[0], people) + findName(person.parents[1], people) + "\n";
+  }
+  if(person.currentSpouse != null){
+    family += "Spouse: " + findName(person.currentSpouse, people) + "\n";
+  }
+  if(getChildren(people, person).length > 0){
+    family += "Children:" + getChildren(people, person);
+  }
+  return family;
+}
 
-// }
+function findName(id, people){
+  let name = people.filter(function(el){
+    if(el.id == id){
+      return true;
+    }
+  });
+  return name[0].firstName + name[0].lastName;
+}
 
 
 function searchByName(people){
