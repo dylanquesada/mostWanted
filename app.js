@@ -4,25 +4,26 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let person;
   switch(searchType){
-    case 'yes':
-    // TODO: search by name
-    break;
-    case 'no':
-    searchByTraits(people);
-    break;
+    case "yes":
+      person = searchByName(people);
+      mainMenu(person[0], people);
+      break;
+    case "no":
+      searchByTraits(people);
+      break;
     default:
-    alert("Wrong! Please try again, following the instructions dummy. :)");
-    app(people); // restart app
-    break;
+      alert("Wrong! Please try again, following the instructions dummy. :)");
+      app(people); // restart app
   }
+
 }
 
 function searchByTraits(people) {
-  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
-
+  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
@@ -30,17 +31,55 @@ function searchByTraits(people) {
     case "weight":
       filteredPeople = searchByWeight(people);
       break;
-    // so on and so forth
+    case "gender":
+      filteredPeople = searchByGender(people);
+      break;
+    case "eye color":
+      filteredPeople = searchByEyeColor(people);
+      break;
+    // case "age" : 
+    //   filteredPeople = searchByAge(people);
+          // break;
+    // case "occupation":
+    //   filteredPeople = searchByOccupation(people);
+        // break;
     default:
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
       break;
-  }  
+    }  
 
-  let foundPerson = filteredPeople[0];
 
-  mainMenu(foundPerson, people);
 
+  if(filteredPeople.length === 1){
+    let foundPerson = filteredPeople[0];
+    mainMenu(foundPerson, people);
+  }
+  else
+    searchByTraits(filteredPeople);
+
+}
+
+function searchByEyeColor(people){
+  let userInputEyeColor = prompt("Please enter the person's eye color.");
+
+  let colorEyes = people.filter(function (eh){
+    if(eh.eyeColor == userInputEyeColor){
+      return true;
+    }
+  });
+  return colorEyes;
+}
+
+function searchByHeight(people){
+  let userInputHeight = prompt("How tall is the person?");
+
+  let howTall = people.filter(function(la){
+    if(la.height == userInputHeight){
+      return true;
+    }
+  });
+  return howTall;
 }
 
 function searchByWeight(people) {
@@ -54,6 +93,25 @@ function searchByWeight(people) {
   });
 
   return newArray;
+}
+
+
+
+
+function searchByGender(people){
+  let userInputGender = prompt("Enter the gender of the person you are looking for. Male or Female:").toLowerCase();
+  switch(userInputGender){
+    case "male":
+    searchByTraits(people);
+    break;
+    case "female":
+    searchByTraits(people);
+    break;
+    default:
+    alert("Invalid! Please try again, you only have two choices.");
+    searchByGender(people);
+    break;
+  }
 }
 
 // Menu function to call once you find who you are looking for
@@ -91,10 +149,21 @@ function mainMenu(person, people){
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
+  let firstNameMatch = false;
 
-  // TODO: find the person using the name they entered
+  let newArray = people.filter(function (el) {
+    if(el.firstName == firstName) {
+      firstNameMatch = true;
+      if(el.lastName == lastName && firstNameMatch){
+        return true;
+      }
+    }
 
+  });
+  return newArray;
 }
+
+
 
 // alerts a list of people
 function displayPeople(people){
