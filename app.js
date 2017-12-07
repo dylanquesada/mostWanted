@@ -27,22 +27,28 @@ function searchByTraits(people) {
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
+      displayPeople(filteredPeople);
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
+      displayPeople(filteredPeople);
       break;
     case "gender":
       filteredPeople = searchByGender(people);
+      displayPeople(filteredPeople);
       break;
     case "eye color":
       filteredPeople = searchByEyeColor(people);
+      displayPeople(filteredPeople);
       break;
     case "age" : 
       filteredPeople = searchByDateOfBirth(people);
+      displayPeople(filteredPeople);
       break;
-    // case "occupation":
-    //   filteredPeople = searchByOccupation(people);
-        // break;
+    case "occupation":
+      filteredPeople = searchByOccupation(people);
+      displayPeople(filteredPeople);
+      break;
     default:
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
@@ -58,6 +64,17 @@ function searchByTraits(people) {
   else
     searchByTraits(filteredPeople);
 
+}
+
+function searchByOccupation(people){
+  let userInputOccupation = prompt("Please enter the person's occupation.");
+
+  let occupation = people.filter(function(el){
+    if(el.occupation == userInputOccupation){
+      return true;
+    }
+  });
+  return occupation;
 }
 
 function searchByDateOfBirth(people){
@@ -112,18 +129,14 @@ function searchByWeight(people) {
 
 function searchByGender(people){
   let userInputGender = prompt("Enter the gender of the person you are looking for. Male or Female:").toLowerCase();
-  switch(userInputGender){
-    case "male":
-    searchByTraits(people);
-    break;
-    case "female":
-    searchByTraits(people);
-    break;
-    default:
-    alert("Invalid! Please try again, you only have two choices.");
-    searchByGender(people);
-    break;
-  }
+
+  let output = people.filter(function (el){
+    if(el.gender == userInputGender){
+      return true;
+    }
+  });
+
+  return output;
 }
 
 // Menu function to call once you find who you are looking for
@@ -140,7 +153,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
@@ -189,7 +202,11 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Date of Birth: " + person.dob + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";// TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
 
