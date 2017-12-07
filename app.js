@@ -14,6 +14,8 @@ function app(people){
     case "no":
       searchByTraits(people);
       break;
+    case "quit":
+    return; // stop execution
     default:
       alert("Wrong! Please try again, following the instructions dummy. :)");
       app(people); // restart app
@@ -49,6 +51,8 @@ function searchByTraits(people) {
       filteredPeople = searchByOccupation(people);
       displayPeople(filteredPeople);
       break;
+    case "quit":
+      return; // stop execution
     default:
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
@@ -159,7 +163,10 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-    // TODO: get person's descendants
+    displayPeople(findDescendants(data, person));
+
+
+
     break;
     case "restart":
     app(people); // restart
@@ -170,6 +177,35 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
+
+function findDescendants(people, person){
+  //does ID appear in any other's parents section
+  //does that ID appear in any other's parents section
+  let descendants = people.filter(function (el){
+    for (let i = 0; i < el.parents.length; i++) {
+      if(el.parents[i] === person.id){
+        return true;
+      } 
+    }
+  });
+  for (let i = 0; i < descendants.length; i++) {
+    descendants = descendants.concat(findDescendants(people, descendants[i]));
+  }
+  return descendants;
+
+}
+
+// function getFamily(person){
+//   let family = "Parents:" + findName(person.parents[0]) + findName(person.parents[1]) + "\n";
+//   if(person.currentSpouse != null){
+//     family += "Spouse: " + findName(person.currentSpouse) + "\n";
+//   }
+
+
+
+
+// }
+
 
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
@@ -187,6 +223,10 @@ function searchByName(people){
   });
   return newArray;
 }
+
+
+
+
 
 
 
