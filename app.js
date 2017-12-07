@@ -205,6 +205,7 @@ function getSpouse(people, person){
 }
 
 function getChildren(people, person){
+  let string = "";
   let children = people.filter(function(el){
     for (let i = 0; i < el.parents.length; i++) {
       if(el.parents[i] === person.id){
@@ -212,7 +213,10 @@ function getChildren(people, person){
       }
     }
   });
-  return children;
+  for (var i = 0; i < children.length; i++) {
+    string = string.concat(children[i].firstName + children[i].lastName);
+  }
+  return string;
 }
 
 function getSiblings(people, person){
@@ -224,7 +228,12 @@ function getSiblings(people, person){
       }
     }
   });
-  return siblings;
+
+  let string = "";
+  for (var i = 0; i < siblings.length; i++) {
+    string.concat(siblings[i].firstName + siblings[i].lastName);
+  }
+  return string;
 }
 
 function getFamily(people, person){
