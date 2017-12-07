@@ -37,9 +37,9 @@ function searchByTraits(people) {
     case "eye color":
       filteredPeople = searchByEyeColor(people);
       break;
-    // case "age" : 
-    //   filteredPeople = searchByAge(people);
-          // break;
+    case "age" : 
+      filteredPeople = searchByDateOfBirth(people);
+      break;
     // case "occupation":
     //   filteredPeople = searchByOccupation(people);
         // break;
@@ -58,6 +58,18 @@ function searchByTraits(people) {
   else
     searchByTraits(filteredPeople);
 
+}
+
+function searchByDateOfBirth(people){
+  let userInputDateOfBirth = prompt("Please enter the person's birthday.");
+
+  let personDateOfBirth = people.filter(function (oh){
+    if(oh.dob == userInputDateOfBirth){
+      return true;
+    }
+
+  });
+  return personDateOfBirth;
 }
 
 function searchByEyeColor(people){
