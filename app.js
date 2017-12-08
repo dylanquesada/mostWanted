@@ -250,7 +250,7 @@ function getSiblings(people, person){
 }
 
 function getFamily(people, person){
-  let family;
+  let family = "";
   if(person.parents.length > 0){
     family = "Parents: " + findName(person.parents[0], people) + "\n";
     if(person.parents.length > 1){ 
@@ -339,24 +339,19 @@ function chars(input){
 
 
 function getAge(birthday) {
-   let currentYear = new Date().getFullYear();
-    let birthYear = new Date(birthday);
-    birthYear = birthYear.getFullYear();
-    let age = currentYear - birthYear;
-   return age;
+  let currentDate = new Date().getDate();
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+  let birthDate = new Date(birthday).getDate();
+  let birthMonth = new Date(birthday).getMonth();
+  let birthYear = new Date(birthday).getFullYear();
+  let age = currentYear - birthYear;
 
+  if(currentMonth < (birthMonth)){
+   age--;
+  }
+  if (((birthMonth) == currentMonth) && (currentDate < birthDate)){
+   age--;
+ }
+  return age;
 }
-   
-
-
-// function getAge(birthday) {
-//    let currentYear = new Date();
-
-
-//    .getFullYear();
-//     let birthYear = new Date(birthday);
-//     birthYear = birthYear.getFullYear();
-//     let age = currentYear - birthYear;
-//    return age;
-
-// }
