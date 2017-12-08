@@ -296,9 +296,9 @@ function searchByName(people){
   let firstNameMatch = false;
 
   let newArray = people.filter(function (el) {
-    if(el.firstName == firstName) {
+    if(el.firstName.toLowerCase() == firstName.toLowerCase()) {
       firstNameMatch = true;
-      if(el.lastName == lastName && firstNameMatch){
+      if(el.lastName.toLowerCase() == lastName.toLowerCase() && firstNameMatch){
         return true;
       }
     }
