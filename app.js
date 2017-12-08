@@ -205,7 +205,7 @@ function getSpouse(people, person){
 }
 
 function getChildren(people, person){
-  let string = "";
+  let string = " ";
   let children = people.filter(function(el){
     for (let i = 0; i < el.parents.length; i++) {
       if(el.parents[i] === person.id){
@@ -214,7 +214,7 @@ function getChildren(people, person){
     }
   });
   for (var i = 0; i < children.length; i++) {
-    string = string.concat(children[i].firstName + children[i].lastName);
+    string = string.concat(children[i].firstName + " " + children[i].lastName + "\n");
   }
   return string;
 }
@@ -229,9 +229,9 @@ function getSiblings(people, person){
     }
   });
 
-  let string = "";
+  let string = " ";
   for (var i = 0; i < siblings.length; i++) {
-    string.concat(siblings[i].firstName + siblings[i].lastName);
+   string = string.concat(siblings[i].firstName + " " + siblings[i].lastName + "\n");
   }
   return string;
 }
@@ -239,13 +239,16 @@ function getSiblings(people, person){
 function getFamily(people, person){
   let family;
   if(person.parents.length > 0){
-    family = "Parents:" + findName(person.parents[0], people) + findName(person.parents[1], people) + "\n";
+    family = "Parents: " + findName(person.parents[0], people) + " " + findName(person.parents[1], people) + "\n";
   }
   if(person.currentSpouse != null){
     family += "Spouse: " + findName(person.currentSpouse, people) + "\n";
   }
   if(getChildren(people, person).length > 0){
-    family += "Children:" + getChildren(people, person);
+    family += "Children: " + getChildren(people, person) + "\n";
+  }
+  if(getSiblings(people, person).length > 0){
+    family += "Siblings: " + getSiblings(people, person);
   }
   return family;
 }
@@ -256,7 +259,7 @@ function findName(id, people){
       return true;
     }
   });
-  return name[0].firstName + name[0].lastName;
+  return name[0].firstName + " " +  name[0].lastName;
 }
 
 
