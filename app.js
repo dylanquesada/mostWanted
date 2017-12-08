@@ -44,7 +44,7 @@ function searchByTraits(people) {
       displayPeople(filteredPeople);
       break;
     case "age" : 
-      filteredPeople = searchByDateOfBirth(people);
+      filteredPeople = searchByAge(people);
       displayPeople(filteredPeople);
       break;
     case "occupation":
@@ -82,6 +82,16 @@ function searchByOccupation(people){
     }
   });
   return occupation;
+}
+
+function searchByAge(people){
+  let userInputAge = prompt("Please enter the person's age.");
+  let age = people.filter(function (el){
+    if(getAge(el.dob) == userInputAge){
+      return true;
+    }
+  });
+  return age;
 }
 
 function searchByDateOfBirth(people){
@@ -242,7 +252,10 @@ function getSiblings(people, person){
 function getFamily(people, person){
   let family;
   if(person.parents.length > 0){
-    family = "Parents: " + findName(person.parents[0], people) + " " + findName(person.parents[1], people) + "\n";
+    family = "Parents: " + findName(person.parents[0], people) + "\n";
+    if(person.parents.length > 1){ 
+      family += findName(person.parents[1], people) + "\n";
+    }
   }
   if(person.currentSpouse != null){
     family += "Spouse: " + findName(person.currentSpouse, people) + "\n";
@@ -253,6 +266,7 @@ function getFamily(people, person){
   if(getSiblings(people, person).length > 0){
     family += "Siblings: " + getSiblings(people, person);
   }
+  //TODO make sure own person is not coming back as their own sibling
   return family;
 }
 
@@ -320,3 +334,29 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+
+
+
+function getAge(birthday) {
+   let currentYear = new Date().getFullYear();
+    let birthYear = new Date(birthday);
+    birthYear = birthYear.getFullYear();
+    let age = currentYear - birthYear;
+   return age;
+
+}
+   
+
+
+// function getAge(birthday) {
+//    let currentYear = new Date();
+
+
+//    .getFullYear();
+//     let birthYear = new Date(birthday);
+//     birthYear = birthYear.getFullYear();
+//     let age = currentYear - birthYear;
+//    return age;
+
+// }
