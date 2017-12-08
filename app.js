@@ -234,10 +234,20 @@ function getChildren(people, person){
 
 function getSiblings(people, person){
   let siblings = people.filter(function(el){
+    if(el.id === person.id){
+      return false;
+    }
     if(el.parents.length === 2){
       if(el.parents[0] === person.parents[0] && el.parents[1] === person.parents[1] ||
       el.parents[1] === person.parents[0] && el.parents[0] === person.parents[1] ){
         return true;
+      }
+    }
+    if(el.parents.length === 1){
+      if(el.parents.length === person.parents.length){
+        if(el.parents[0] === person.parents[0]){
+          return true;
+        }
       }
     }
   });
