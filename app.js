@@ -65,6 +65,9 @@ function searchByTraits(people) {
     let foundPerson = filteredPeople[0];
     mainMenu(foundPerson, people);
   }
+  else if(filteredPeople.length === 0){
+    searchByTraits(people);
+  }
   else
     searchByTraits(filteredPeople);
 
@@ -279,12 +282,6 @@ function searchByName(people){
   });
   return newArray;
 }
-
-
-
-
-
-
 
 // alerts a list of people
 function displayPeople(people){
