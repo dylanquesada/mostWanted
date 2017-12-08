@@ -25,7 +25,7 @@ function app(people){
 
 function searchByTraits(people) {
   let filteredPeople;
-  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
+  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'. 'Quit' to exit program.");
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
@@ -177,9 +177,6 @@ function mainMenu(person, people){
     break;
     case "descendants":
     displayPeople(findDescendants(people, person));
-
-
-
     break;
     case "restart":
     app(people); // restart
@@ -309,6 +306,10 @@ function searchByName(people){
 
 // alerts a list of people
 function displayPeople(people){
+  if(people.length === 0){
+    alert("Nobody found.");
+    return;
+  }
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
