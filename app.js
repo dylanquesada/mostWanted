@@ -135,15 +135,18 @@ function searchByHeight(people){
 
 function searchByWeight(people) {
   let userInputWeight = prompt("How much does the person weigh?");
-
-  let newArray = people.filter(function (el) {
-    if(el.weight == userInputWeight) {
-      return true;
-    }
-    // return true if el.height matches userInputHeight
-  });
-
-  return newArray;
+  if(validateNumber(userInputWeight)){
+    let newArray = people.filter(function (el) {
+      if(el.weight == userInputWeight) {
+        return true;
+      }
+    });
+    return newArray;
+  }
+  if(!validateNumber(userInputWeight)){
+    alert("Invalid input. Please enter a number.");
+    return searchByWeight(people);
+  }
 }
 
 
