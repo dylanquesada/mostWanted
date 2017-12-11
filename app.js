@@ -75,7 +75,7 @@ function searchByTraits(people) {
 }
 
 function searchByOccupation(people){
-  let userInputOccupation = prompt("Please enter the person's occupation.");
+  let userInputOccupation = prompt("Please enter the person's occupation.").toLowerCase();
 
   let occupation = people.filter(function(el){
     if(el.occupation == userInputOccupation){
@@ -101,15 +101,30 @@ function searchByAge(people){
   }
 }
 
-function searchByEyeColor(people){
-  let userInputEyeColor = prompt("Please enter the person's eye color.");
-
-  let colorEyes = people.filter(function (eh){
-    if(eh.eyeColor == userInputEyeColor){
+function isColor(input){
+  let colors = ["brown", "black", "hazel", "blue", "green"];
+  for (var i = 0; i < colors.length; i++) {
+    if(input === colors[i]){
       return true;
     }
-  });
-  return colorEyes;
+  }
+    return false;
+}
+
+function searchByEyeColor(people){
+  let userInputEyeColor = prompt("Please enter the person's eye color.").toLowerCase();
+  if(!isColor(userInputEyeColor)){
+    alert("Please enter the person's eye color.");
+    return searchByEyeColor(people);
+  }
+  else{
+    let colorEyes = people.filter(function (eh){
+      if(eh.eyeColor == userInputEyeColor){
+        return true;
+      }
+    });
+    return colorEyes;
+  }
 }
 
 function searchByHeight(people){
@@ -174,7 +189,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'").toLowerCase();
 
   switch(displayOption){
     case "info":
