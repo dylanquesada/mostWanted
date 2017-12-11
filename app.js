@@ -25,7 +25,7 @@ function app(people){
 
 function searchByTraits(people) {
   let filteredPeople;
-  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'. 'Quit' to exit program.");
+  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'. 'Quit' to exit program.").toLowerCase();
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
@@ -154,14 +154,19 @@ function searchByWeight(people) {
 
 function searchByGender(people){
   let userInputGender = prompt("Enter the gender of the person you are looking for. Male or Female:").toLowerCase();
+  if(userInputGender === "male" || userInputGender === "female"){
+    let output = people.filter(function (el){
+      if(el.gender == userInputGender){
+        return true;
+      }
+    });
 
-  let output = people.filter(function (el){
-    if(el.gender == userInputGender){
-      return true;
-    }
-  });
-
-  return output;
+    return output;
+  }
+  else{
+    alert("Please enter a gender, 'male' or 'female'.");
+    return searchByGender(people);
+  }
 }
 
 // Menu function to call once you find who you are looking for
@@ -192,6 +197,7 @@ function mainMenu(person, people){
     case "quit":
     return; // stop execution
     default:
+    alert("Invalid Entry! Please try again.");
     return mainMenu(person, people); // ask again
   }
 }
