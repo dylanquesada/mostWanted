@@ -4,7 +4,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchType = prompt("Do you know the name of the person you are looking for? Enter 'yes' or 'no'").toLowerCase();
   let person;
   switch(searchType){
     case "yes":
@@ -16,6 +16,7 @@ function app(people){
       break;
     case "quit":
     return; // stop execution
+    break;
     default:
       alert("Wrong! Please try again, following the instructions dummy. :)");
       app(people); // restart app
