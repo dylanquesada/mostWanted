@@ -119,13 +119,18 @@ function searchByEyeColor(people){
 
 function searchByHeight(people){
   let userInputHeight = prompt("How tall is the person?");
-
-  let howTall = people.filter(function(la){
-    if(la.height == userInputHeight){
-      return true;
-    }
-  });
-  return howTall;
+  if(validateNumber(userInputHeight)){
+    let howTall = people.filter(function(la){
+      if(la.height == userInputHeight){
+        return true;
+      }
+    });
+    return howTall;
+  }
+  if(!validateNumber(userInputHeight)){
+    alert("Invalid input. Please enter a number.");
+   return searchByHeight(people);
+  }
 }
 
 function searchByWeight(people) {
@@ -341,6 +346,17 @@ function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
 
+function validateNumber(input){
+  if(isNaN(input)){
+    return false;
+  }
+  else if(input === ""){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
