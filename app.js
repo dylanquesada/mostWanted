@@ -87,24 +87,18 @@ function searchByOccupation(people){
 
 function searchByAge(people){
   let userInputAge = prompt("Please enter the person's age.");
-  let age = people.filter(function (el){
-    if(getAge(el.dob) == userInputAge){
-      return true;
-    }
-  });
-  return age;
-}
-
-function searchByDateOfBirth(people){
-  let userInputDateOfBirth = prompt("Please enter the person's birthday.");
-
-  let personDateOfBirth = people.filter(function (oh){
-    if(oh.dob == userInputDateOfBirth){
-      return true;
-    }
-
-  });
-  return personDateOfBirth;
+  if(validateNumber(userInputAge)){
+    let age = people.filter(function (el){
+      if(getAge(el.dob) == userInputAge){
+        return true;
+      }
+    });
+    return age;
+  }
+  else{
+    alert("Please enter a number");
+    return searchByAge(people);
+  }
 }
 
 function searchByEyeColor(people){
