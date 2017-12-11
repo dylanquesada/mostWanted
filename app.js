@@ -12,17 +12,96 @@ function app(people){
       mainMenu(person[0], people);
       break;
     case "no":
-      searchByTraits(people);
+      searchByMultipleTraits(people);
       break;
     case "quit":
     return; // stop execution
     break;
     default:
-      alert("Wrong! Please try again, following the instructions dummy. :)");
+      alert("Invalid entry. Please try again.");
       app(people); // restart app
   }
 
 }
+
+function searchByMultipleTraits(people){
+  let userInputChoice = prompt("Pick some search criteria: 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'. 'Quit' to exit program.").toLowerCase().trim();
+  let current = [];
+  let filteredPeople = [];
+  let persons;
+  current = userInputChoice.split(",");
+  for (var i = 0; i < current.length; i++) {
+    if(i === 0){
+      switch(current[i].trim()){
+        case "height":
+        filteredPeople.push(searchByHeight(people));
+        break;
+        case "weight":
+        filteredPeople.push(searchByWeight(people));
+        break;
+        case "eye color":
+        filteredPeople.push(searchByEyeColor(people));
+        break;
+        case "gender":
+        filteredPeople.push(searchByGender(people));
+        break;
+        case "age":
+        filteredPeople.push(searchByAge(people));
+        break;
+        case "occupation":
+        filteredPeople.push(searchByOccupation(people));
+        break;
+        case "quit":
+        // return;
+        default:
+        alert("You have entered an invalid selection. Try Again.");
+        searchByMultipleTraits(people);
+        break;
+      }
+    }
+    else{
+      switch(current[i].trim()){
+        case "height":
+        filteredPeople = (searchByHeight(filteredPeople[0]));
+        break;
+        case "weight":
+        filteredPeople = (searchByWeight(filteredPeople[0]));
+        break;
+        case "eye color":
+        filteredPeople = (searchByEyeColor(filteredPeople[0]));
+        break;
+        case "gender":
+        filteredPeople = (searchByGender(filteredPeople[0]));
+        break;
+        case "age":
+        filteredPeople = (searchByAge(filteredPeople[0]));
+        break;
+        case "occupation":
+        filteredPeople = (searchByOccupation(filteredPeople[0]));
+        break;
+        case "quit":
+        // return;
+        default:
+        alert("You have entered an invalid selection. Try Again.");
+        searchByMultipleTraits(people);
+        break;
+      }
+    }
+  }
+  if(filteredPeople.length === 1){
+    let foundPerson = filteredPeople[0];
+    mainMenu(foundPerson, people);
+  }
+  else if(filteredPeople.length === 0){
+    alert("No person found.");
+    searchByMultipleTraits(people);
+  }
+  else{
+    alert("More than one person:"+ displayPeople(filteredPeople));
+    searchByMultipleTraits(filteredPeople);
+  }
+}
+
 
 function searchByTraits(people) {
   let filteredPeople;
@@ -69,9 +148,9 @@ function searchByTraits(people) {
   else if(filteredPeople.length === 0){
     searchByTraits(people);
   }
-  else
+  else{
     searchByTraits(filteredPeople);
-
+  }
 }
 
 function searchByOccupation(people){
@@ -226,7 +305,6 @@ function findDescendants(people, person){
     descendants = descendants.concat(findDescendants(people, descendants[i]));
   }
   return descendants;
-
 }
 
 function getSpouse(people, person){
