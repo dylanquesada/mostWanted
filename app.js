@@ -30,6 +30,10 @@ function searchByMultipleTraits(people){
   let filteredPeople = [];
   let persons;
   current = userInputChoice.split(",");
+  if(!validateMultipleCriteria(current)){
+    alert("Error. Invalid entry. Please enter criteria separated by commas. (ex. 'height, age, occupation'");
+    return
+  }
   for (var i = 0; i < current.length; i++) {
     if(i === 0){
       switch(current[i].trim()){
@@ -459,6 +463,21 @@ function chars(input){
   return true; // default validation only
 }
 
+function validateMultipleCriteria(input){
+  arrayOfCriteria = ["height", "weight", "age", "eye color", "occupation", "gender"];
+  let isCriteria = false;
+  for (var i = 0; i < input.length; i++) {
+    isCriteria = false;
+    for (var j = 0; j < arrayOfCriteria.length; j++) {
+      if(arrayOfCriteria[j] === input[i]){
+        isCriteria = true;
+      }
+    }
+    if(!isCriteria){
+      return false;
+    }
+  }
+}
 
 
 
