@@ -21,7 +21,6 @@ function app(people){
       alert("Invalid entry. Please try again.");
       app(people); // restart app
   }
-
 }
 
 function searchByMultipleTraits(people){
@@ -71,12 +70,11 @@ function searchByMultipleTraits(people){
     searchByMultipleTraits(people);
   }
   else{
-    alert("More than one person:");
+    alert("More than one person! Select the one you'd like by name.");
     displayPeople(filteredPeople);
-    searchByMultipleTraits(filteredPeople);
+    mainMenu(searchByName(filteredPeople)[0], people);
   }
 }
-
 
 function searchByTraits(people) {
   let filteredPeople;
@@ -363,12 +361,10 @@ function findName(id, people){
   return name[0].firstName + " " +  name[0].lastName;
 }
 
-
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
   let firstNameMatch = false;
-
   let newArray = people.filter(function (el) {
     if(el.firstName.toLowerCase() == firstName.toLowerCase()) {
       firstNameMatch = true;
@@ -376,7 +372,6 @@ function searchByName(people){
         return true;
       }
     }
-
   });
   return newArray;
 }
@@ -454,8 +449,6 @@ function validateMultipleCriteria(input){
   return true;
 }
 
-
-
 function getAge(birthday) {
   let currentDate = new Date().getDate();
   let currentMonth = new Date().getMonth();
@@ -464,7 +457,6 @@ function getAge(birthday) {
   let birthMonth = new Date(birthday).getMonth();
   let birthYear = new Date(birthday).getFullYear();
   let age = currentYear - birthYear;
-
   if(currentMonth < (birthMonth)){
    age--;
   }
